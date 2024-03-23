@@ -1,0 +1,29 @@
+<script>
+window.RufflePlayer = window.RufflePlayer || {};
+window.RufflePlayer.config = {
+    "autoplay": "on",
+    "splashScreen": false,
+    "unmuteOverlay": "hidden",
+};
+
+window.addEventListener("load", (event) => {
+    const ruffle = window.RufflePlayer.newest();
+    const player = ruffle.createPlayer();
+    const container = document.getElementById("container");
+    container.appendChild(player);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const swfUrl = urlParams.get('url');
+
+    if (swfUrl) {
+        player.load(swfUrl);
+    } else {
+player.load("https://raw.githubusercontent.com/BinBashBanana/gstore/master/3dtanks.swf");
+    }
+
+    player.style.width = "100%";
+    player.style.height = "100%";
+});
+</script>
+<script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+<div id="container"></div>
