@@ -18,12 +18,12 @@ window.addEventListener("load", (event) => {
     if (swfUrl) {
         player.load(swfUrl);
     } else {
-player.load("https://raw.githubusercontent.com/CodingKitten-YT/FlashEmbed/main/files/KittenGamez.swf");
+        player.load("https://raw.githubusercontent.com/CodingKitten-YT/FlashEmbed/main/files/KittenGamez.swf");
     }
 
-    player.style.width = "100%";
     player.style.height = "100%";
+    player.style.width = "calc(100% * (4 / 3))"; // 4:3 aspect ratio
 });
 </script>
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-<div id="container"></div>
+<div id="container" style="width:100%; height:100vh; display:flex; justify-content:center; align-items:center;"></div>
