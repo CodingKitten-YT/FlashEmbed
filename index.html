@@ -6,6 +6,19 @@ window.RufflePlayer.config = {
     "unmuteOverlay": "hidden",
 };
 
+function resizePlayer(player, aspectWidth, aspectHeight) {
+    const containerHeight = window.innerHeight;
+    const calculatedWidth = (containerHeight / aspectHeight) * aspectWidth;
+
+    player.style.height = "100%";
+    player.style.width = `${calculatedWidth}px`;
+
+    if (calculatedWidth > window.innerWidth) {
+        player.style.width = "100%";
+        player.style.height = `${(window.innerWidth / aspectWidth) * aspectHeight}px`;
+    }
+}
+
 window.addEventListener("load", (event) => {
     const ruffle = window.RufflePlayer.newest();
     const player = ruffle.createPlayer();
@@ -15,12 +28,6 @@ window.addEventListener("load", (event) => {
     const urlParams = new URLSearchParams(window.location.search);
     const swfUrl = urlParams.get('url');
     const aspectRatio = urlParams.get('aspect');
-
-    if (swfUrl) {
-        player.load(swfUrl);
-    } else {
-        player.load("https://raw.githubusercontent.com/CodingKitten-YT/FlashEmbed/main/files/KittenGamez.swf");
-    }
 
     let aspectWidth = 4;
     let aspectHeight = 3;
@@ -33,16 +40,17 @@ window.addEventListener("load", (event) => {
         }
     }
 
-    const containerHeight = window.innerHeight;
-    const calculatedWidth = (containerHeight / aspectHeight) * aspectWidth;
-
-    player.style.height = "100%";
-    player.style.width = `${calculatedWidth}px`;
-
-    if (calculatedWidth > window.innerWidth) {
-        player.style.width = "100%";
-        player.style.height = `${(window.innerWidth / aspectWidth) * aspectHeight}px`;
+    if (swfUrl) {
+        player.load(swfUrl);
+    } else {
+        player.load("https://raw.githubusercontent.com/CodingKitten-YT/FlashEmbed/main/files/KittenGamez.swf");
     }
+
+    resizePlayer(player, aspectWidth, aspectHeight);
+
+    window.addEventListener('resize', () => {
+        resizePlayer(player, aspectWidth, aspectHeight);
+    });
 });
 </script>
 
