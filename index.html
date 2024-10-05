@@ -33,11 +33,16 @@ window.addEventListener("load", (event) => {
         }
     }
 
-    const containerHeight = container.offsetHeight;
+    const containerHeight = window.innerHeight;
     const calculatedWidth = (containerHeight / aspectHeight) * aspectWidth;
 
     player.style.height = "100%";
     player.style.width = `${calculatedWidth}px`;
+
+    if (calculatedWidth > window.innerWidth) {
+        player.style.width = "100%";
+        player.style.height = `${(window.innerWidth / aspectWidth) * aspectHeight}px`;
+    }
 });
 </script>
 
@@ -53,5 +58,8 @@ window.addEventListener("load", (event) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
   }
 </style>
