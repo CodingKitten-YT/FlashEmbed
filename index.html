@@ -14,16 +14,44 @@ window.addEventListener("load", (event) => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const swfUrl = urlParams.get('url');
+    const aspectRatio = urlParams.get('aspect');
 
     if (swfUrl) {
         player.load(swfUrl);
     } else {
-player.load("https://raw.githubusercontent.com/CodingKitten-YT/FlashEmbed/main/files/KittenGamez.swf");
+        player.load("https://raw.githubusercontent.com/CodingKitten-YT/FlashEmbed/main/files/KittenGamez.swf");
     }
 
-    player.style.width = "100%";
+    let aspectWidth = 4;
+    let aspectHeight = 3;
+
+    if (aspectRatio) {
+        const [width, height] = aspectRatio.split(':').map(Number);
+        if (!isNaN(width) && !isNaN(height)) {
+            aspectWidth = width;
+            aspectHeight = height;
+        }
+    }
+
+    const containerHeight = container.offsetHeight;
+    const calculatedWidth = (containerHeight / aspectHeight) * aspectWidth;
+
     player.style.height = "100%";
+    player.style.width = `${calculatedWidth}px`;
 });
 </script>
+
 <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-<div id="container"></div>
+<div id="container" style="height:100vh;"></div>
+
+<style>
+  body {
+    margin: 0;
+    background-color: black;
+  }
+  #container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
